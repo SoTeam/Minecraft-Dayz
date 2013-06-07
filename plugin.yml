@@ -1,0 +1,22 @@
+name: KapipDayZ
+version: 1.5.3.1B
+description: Kapip created DAYZ plugin!
+author: Mr_Burkes & StealthDino
+website: http://kapip.com
+
+main: org.kapip.dayz.Main
+database: false
+
+commands:
+    dump:
+        Permission: kapipdayz.dump
+        Usage: /dump
+        Description: Dump the item in your hand.
+        Default: true
+        aliases: [d]
+        
+    stopforce:
+        Permission: kapipdayz.stop
+        Usage: /stopforce
+        Description: RAHH.
+        Default: true
