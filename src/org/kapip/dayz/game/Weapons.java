@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.kapip.dayz.PLUGIN;
-import org.kapip.dayz.game.thread.weapon.FireShotDelay;
 import org.kapip.dayz.game.thread.weapon.RemoveLastFired;
 
 public class Weapons {
 	public static ArrayList<String> LAST_FIRED = new ArrayList<String>();
-
 	
 	//pistol fire rates
 	public static void firePistol(String name){

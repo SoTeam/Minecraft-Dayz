@@ -3,8 +3,8 @@ package org.kapip.dayz.event;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import net.minecraft.server.EntityCreature;
-import net.minecraft.server.Navigation;
+import net.minecraft.server.v1_5_R3.EntityCreature;
+import net.minecraft.server.v1_5_R3.Navigation;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
-import org.bukkit.craftbukkit.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_5_R3.entity.CraftCreature;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -228,7 +228,7 @@ public class PlayerHandle implements Listener {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(PLUGIN.A, new CheckDrink(p, p.getInventory().getHeldItemSlot()), 32L);
 				
 			//pistol effect
-				if(User.hasPistol1(p)){			
+				if(User.hasPistol(p)){			
 					if(p.getInventory().contains(Material.ARROW, 1) && !Weapons.LAST_FIRED.contains(p.getName())){
 						p.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
 						p.launchProjectile(Arrow.class);
@@ -244,56 +244,8 @@ public class PlayerHandle implements Listener {
 					}
 					return;
 				}
-				if(User.hasPistol2(p)){			// Pistol effect
-					if(p.getInventory().contains(Material.ARROW, 1) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
-						p.launchProjectile(Arrow.class);
-						Weapons.firePistol2(name);
-						
-						is.setDurability((short)(is.getDurability()+1));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}	
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasPistol3(p)){			// Pistol effect
-					if(p.getInventory().contains(Material.ARROW, 1) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
-						p.launchProjectile(Arrow.class);
-						Weapons.firePistol3(name);
-						
-						is.setDurability((short)(is.getDurability()+1));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}	
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasPistol4(p)){			// Pistol effect
-					if(p.getInventory().contains(Material.ARROW, 1) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
-						p.launchProjectile(Arrow.class);
-						Weapons.firePistol4(name);
-						
-						is.setDurability((short)(is.getDurability()+1));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}	
-						
-						p.updateInventory();
-					}
-					return;
-				}
 				
-				if(User.hasShotgun1(p)){			// "Shotgun" effect
+				if(User.hasShotgun(p)){			// "Shotgun" effect
 					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
 						p.getInventory().removeItem(new ItemStack(Material.ARROW));
 						for(int i = 0;i < 6;i++){
@@ -311,62 +263,9 @@ public class PlayerHandle implements Listener {
 					}
 					return;
 				}
-				if(User.hasShotgun2(p)){			// "Shotgun" effect
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						for(int i = 0;i < 6;i++){
-							p.launchProjectile(Arrow.class);
-						}
-						Weapons.fireShotgun2(name);
-						
-						is.setDurability((short)(is.getDurability()+1));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasShotgun3(p)){			// "Shotgun" effect
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						for(int i = 0;i < 6;i++){
-							p.launchProjectile(Arrow.class);
-						}
-						Weapons.fireShotgun3(name);
-						
-						is.setDurability((short)(is.getDurability()+1));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasShotgun4(p)){			// "Shotgun" effect
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						for(int i = 0;i < 6;i++){
-							p.launchProjectile(Arrow.class);
-						}
-						Weapons.fireShotgun4(name);
-						
-						is.setDurability((short)(is.getDurability()+1));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
+
 				
-				if(User.hasCombatRifle1(p)){	
+				if(User.hasCombatRifle(p)){	
 					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
 						p.getInventory().removeItem(new ItemStack(Material.ARROW));
 						p.launchProjectile(Arrow.class);
@@ -383,115 +282,13 @@ public class PlayerHandle implements Listener {
 					}
 					return;
 				}
-				if(User.hasCombatRifle2(p)){	
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						p.launchProjectile(Arrow.class);
-	
-						Weapons.fireCombatRifle2(name);
-						
-						is.setDurability((short)(is.getDurability()+3));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasCombatRifle3(p)){	
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						p.launchProjectile(Arrow.class);
-	
-						Weapons.fireCombatRifle3(name);
-						
-						is.setDurability((short)(is.getDurability()+3));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasCombatRifle4(p)){	
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						p.launchProjectile(Arrow.class);
-	
-						Weapons.fireCombatRifle4(name);
-						
-						is.setDurability((short)(is.getDurability()+3));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
 				
-				if(User.hasMachineGun1(p)){			// Machine gun effect
+				if(User.hasMachineGun(p)){			// Machine gun effect
 					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
 						p.getInventory().removeItem(new ItemStack(Material.ARROW));
 						p.launchProjectile(Arrow.class);
 	
 						Weapons.fireMachineGun(p);
-						
-						is.setDurability((short)(is.getDurability()+3));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasMachineGun2(p)){			// Machine gun effect
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						p.launchProjectile(Arrow.class);
-	
-						Weapons.fireMachineGun2(p);
-						
-						is.setDurability((short)(is.getDurability()+3));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasMachineGun3(p)){			// Machine gun effect
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						p.launchProjectile(Arrow.class);
-	
-						Weapons.fireMachineGun3(p);
-						
-						is.setDurability((short)(is.getDurability()+3));
-						if(is.getDurability() > is.getType().getMaxDurability()){
-							is.setDurability(is.getType().getMaxDurability());
-							p.setItemInHand(new ItemStack(0));
-						}
-						
-						p.updateInventory();
-					}
-					return;
-				}
-				if(User.hasMachineGun4(p)){			// Machine gun effect
-					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
-						p.launchProjectile(Arrow.class);
-	
-						Weapons.fireMachineGun4(p);
 						
 						is.setDurability((short)(is.getDurability()+3));
 						if(is.getDurability() > is.getType().getMaxDurability()){
@@ -528,56 +325,14 @@ public class PlayerHandle implements Listener {
 					
 					p.updateInventory();
 				}
-				/*
-				if(User.hasBandage(p)){
-					if(p.hasPotionEffect(PotionEffectType.POISON)){
-						p.getInventory().removeItem(new ItemStack(Material.PAPER, 1));
-						
-						p.sendMessage(ChatColor.GRAY+"You used a bandage and are no longer bleeding.");
-						
-						p.removePotionEffect(PotionEffectType.POISON);
-					}
-					else
-						p.sendMessage(ChatColor.GRAY+"You are not bleeding.");
-					
-					p.updateInventory();
-				}
-				*/
-				
-				return;
-				
+			
+				return;	
 			}
-			/*
-			if(User.hasBloodBag(p)){
-				if(p.hasPotionEffect(PotionEffectType.POISON)){
-					p.sendMessage(ChatColor.GRAY + "You used a blood bag, but you are still bleeding.");
-				}
-				if(p.getHealth() < 20){
-					p.getInventory().removeItem(new ItemStack(Material.SADDLE, 1));
-					p.sendMessage(ChatColor.GRAY+"You used a blood bag.");
-						
-					if(p.getHealth() <= 10){
-						p.setHealth(p.getHealth()+10);
-					}
-					else{
-						p.setHealth(20);
-					}
-					
-					p.removePotionEffect(PotionEffectType.REGENERATION);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 0));
-					}
-				else if(p.getHealth() >= 20)
-					p.sendMessage(ChatColor.GRAY+"Your health is already full.");
-				
-				p.updateInventory();
-			}
-			*/
+			
 			return;
 		}
 	}
 		
-	
-	
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerJoin(PlayerJoinEvent e){
@@ -622,23 +377,7 @@ public class PlayerHandle implements Listener {
 					}
 
 				e.setQuitMessage(null);
-				if(p.getDisplayName() != "999giles" || p.getDisplayName() != "AGuyWhoSkis" || p.getDisplayName() != "TehHappy" || p.getDisplayName() != "Tennisball97" || p.getDisplayName() != "StealthDino"|| p.getDisplayName() != "ddempsey94"|| p.getDisplayName() != "cgrothaus"){
-					Bukkit.broadcastMessage(ChatColor.RED+p.getName()+" is a coward.");
-				}
-				else if(p.getDisplayName() == "ddempsey94"){
-					Bukkit.broadcastMessage(ChatColor.RED+p.getName()+" w3nt 2 g0 hav lotz uf secks");
-				}
-				
-				else if(p.getDisplayName() == "StealthDino"){
-					Bukkit.broadcastMessage(ChatColor.RED+p.getName()+"can do what he wants, and pvp-logged.");
-				}
-				else if(p.getDisplayName() == "cgrothaus"){
-					Bukkit.broadcastMessage(ChatColor.RED+p.getName()+" is annoying and left because he is stupid.");
-				}
-				else{
-					Bukkit.broadcastMessage(ChatColor.RED+p.getName()+" had to leave suddenly.");
-				}
-				
+				Bukkit.broadcastMessage(ChatColor.RED+p.getName()+" PVP-logged!");
 			}
 		}
 		catch(NullPointerException err){}

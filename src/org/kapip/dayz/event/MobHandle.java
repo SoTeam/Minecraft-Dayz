@@ -2,13 +2,13 @@ package org.kapip.dayz.event;
 
 import java.util.Random;
 
-import net.minecraft.server.EntityCreature;
-import net.minecraft.server.EntityLiving;
-import net.minecraft.server.Navigation;
+import net.minecraft.server.v1_5_R3.EntityCreature;
+import net.minecraft.server.v1_5_R3.EntityLiving;
+import net.minecraft.server.v1_5_R3.Navigation;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.entity.CraftCreature;
-import org.bukkit.craftbukkit.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_5_R3.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_5_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;

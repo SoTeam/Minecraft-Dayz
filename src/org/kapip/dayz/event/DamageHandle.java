@@ -30,42 +30,14 @@ public class DamageHandle implements Listener {
 				
 				if(User.hasSniper(shooter))
 					e.setDamage(30);
-				
-				else if(User.hasCombatRifle1(shooter))
-					e.setDamage(6);
-				else if(User.hasCombatRifle2(shooter))
+				else if(User.hasCombatRifle(shooter))
+					e.setDamage(6); 	
+				else if(User.hasShotgun(shooter))
 					e.setDamage(8);
-				else if(User.hasCombatRifle3(shooter))
-					e.setDamage(10);
-				else if(User.hasCombatRifle4(shooter))
-					e.setDamage(12);
-				
-				else if(User.hasShotgun1(shooter))
-					e.setDamage(6);
-				else if(User.hasShotgun2(shooter))
-					e.setDamage(10);
-				else if(User.hasShotgun3(shooter))
-					e.setDamage(12);
-				else if(User.hasShotgun4(shooter))
-					e.setDamage(14);
-				
-				else if(User.hasPistol1(shooter))
+				else if(User.hasPistol(shooter))
 					e.setDamage(4);
-				else if(User.hasPistol2(shooter))
-					e.setDamage(6);
-				else if(User.hasPistol3(shooter))
-					e.setDamage(8);
-				else if(User.hasPistol4(shooter))
-					e.setDamage(10);
-				
-				else if(User.hasMachineGun1(shooter))
-					e.setDamage(6);
-				else if(User.hasMachineGun2(shooter))
-					e.setDamage(8);
-				else if(User.hasMachineGun3(shooter))
-					e.setDamage(10);
-				else if(User.hasMachineGun4(shooter))
-					e.setDamage(14);
+				else if(User.hasMachineGun(shooter))
+					e.setDamage(4);
 			}
 		}
 		

@@ -2,13 +2,13 @@ package org.kapip.dayz.event;
 
 import java.util.Random;
 
-import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.Packet18ArmAnimation;
+import net.minecraft.server.v1_5_R3.EntityPlayer;
+import net.minecraft.server.v1_5_R3.Packet18ArmAnimation;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_5_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -40,93 +40,31 @@ public class Projectiles implements Listener {
 					return;
 				}
 			}
-	/* Shotgun */
-			if(User.hasShotgun1(p)){
+			
+			if(User.hasShotgun(p)){
 			    Random random = new Random();
 			    ent.setVelocity(new Vector(
 			    		(ent.getVelocity().getX()*1.8)+((random.nextFloat()-random.nextFloat())/2.2),
 			    		(ent.getVelocity().getY()*1.97),
 			    		(ent.getVelocity().getZ()*1.8)+((random.nextFloat()-random.nextFloat())/2.2)
 			    ));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
+				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
 				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
 			    return;
 			}
-			else if(User.hasShotgun2(p)){
-			    Random random = new Random();
-			    ent.setVelocity(new Vector(
-			    		(ent.getVelocity().getX()*1.8)+((random.nextFloat()-random.nextFloat())/2.2),
-			    		(ent.getVelocity().getY()*1.97),
-			    		(ent.getVelocity().getZ()*1.8)+((random.nextFloat()-random.nextFloat())/2.2)
-			    ));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-			    return;
-			}
-			else if(User.hasShotgun3(p)){
-			    Random random = new Random();
-			    ent.setVelocity(new Vector(
-			    		(ent.getVelocity().getX()*1.8)+((random.nextFloat()-random.nextFloat())/2.2),
-			    		(ent.getVelocity().getY()*1.97),
-			    		(ent.getVelocity().getZ()*1.8)+((random.nextFloat()-random.nextFloat())/2.2)
-			    ));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-			    return;
-			}
-			else if(User.hasShotgun4(p)){
-			    Random random = new Random();
-			    ent.setVelocity(new Vector(
-			    		(ent.getVelocity().getX()*1.8)+((random.nextFloat()-random.nextFloat())/2.2),
-			    		(ent.getVelocity().getY()*1.97),
-			    		(ent.getVelocity().getZ()*1.8)+((random.nextFloat()-random.nextFloat())/2.2)
-			    ));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-			    return;
-			}
-	/*Assault Rifles*/
-			else if(User.hasCombatRifle1(p)){
+			else if(User.hasCombatRifle(p)){
 			    ent.setVelocity(new Vector(
 			    		ent.getVelocity().getX()*2.7,
 			    		ent.getVelocity().getY()*2.9,
 			    		ent.getVelocity().getZ()*2.7));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
+				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
 				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
 			    return;
 			}
-			else if(User.hasCombatRifle2(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*2.7,
-			    		ent.getVelocity().getY()*2.9,
-			    		ent.getVelocity().getZ()*2.7));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-			    return;
-			}
-			else if(User.hasCombatRifle3(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*2.7,
-			    		ent.getVelocity().getY()*2.9,
-			    		ent.getVelocity().getZ()*2.7));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-			    return;
-			}
-			else if(User.hasCombatRifle4(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*2.7,
-			    		ent.getVelocity().getY()*2.9,
-			    		ent.getVelocity().getZ()*2.7));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-			    return;
-			}
-	/* Sniper */
 			else if(User.hasSniper(p)){
 				if(p.getInventory().contains(Material.ARROW, 1)){
 					p.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
-					cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
+					cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
 					Game.arrowsFired.add(ent);
 					Weapons.fireSniper(p.getName());
 					p.sendMessage(ChatColor.DARK_GRAY+"Reloading sniper...");
@@ -136,85 +74,25 @@ public class Projectiles implements Listener {
 				
 				return;
 			}
-			
-	/* Pistols */
-			else if(User.hasPistol1(p)){
+			else if(User.hasPistol(p)){
 			    ent.setVelocity(new Vector(
 			    		ent.getVelocity().getX()*1.85,
 			    		ent.getVelocity().getY()*1.9,
 			    		ent.getVelocity().getZ()*1.85));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
+				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
 				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
 				return;
 			}
-			else if(User.hasPistol2(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*1.85,
-			    		ent.getVelocity().getY()*1.9,
-			    		ent.getVelocity().getZ()*1.85));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-				return;
-			}
-			else if(User.hasPistol3(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*1.85,
-			    		ent.getVelocity().getY()*1.9,
-			    		ent.getVelocity().getZ()*1.85));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-				return;
-			}
-			else if(User.hasPistol4(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*1.85,
-			    		ent.getVelocity().getY()*1.9,
-			    		ent.getVelocity().getZ()*1.85));
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-				return;
-			}
-			
-	/* LMG's */
-			else if(User.hasMachineGun1(p)){
+			else if(User.hasMachineGun(p)){
 			    ent.setVelocity(new Vector(
 			    		ent.getVelocity().getX()*2.7,
 			    		ent.getVelocity().getY()*2.9,
 			    		ent.getVelocity().getZ()*2.7));
 			    p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				return;
-			}
-			else if(User.hasMachineGun2(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*2.7,
-			    		ent.getVelocity().getY()*2.9,
-			    		ent.getVelocity().getZ()*2.7));
-			    p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				return;
-			}
-			else if(User.hasMachineGun3(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*2.7,
-			    		ent.getVelocity().getY()*2.9,
-			    		ent.getVelocity().getZ()*2.7));
-			    p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
-				return;
-			}
-			else if(User.hasMachineGun4(p)){
-			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*2.7,
-			    		ent.getVelocity().getY()*2.9,
-			    		ent.getVelocity().getZ()*2.7));
-			    p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
-				cp.netServerHandler.sendPacket(new Packet18ArmAnimation(cp, 1));
+				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
 				return;
 			}
 		}
-		
-		e.getEntity().remove();
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)

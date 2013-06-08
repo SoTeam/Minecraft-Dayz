@@ -23,64 +23,26 @@ public class User {
 	}
 	
 	public static void drink(Player p){
-		
 			thirst.put(p.getName(), User.fullDrink);
 			p.sendMessage(ChatColor.AQUA+"You drank water! Your thirst has been quenched!");
-		
 	}
 	
-	/*weapons*/
+	/* Weapons */
 	
-	public static boolean hasPistol1(Player p){
+	public static boolean hasPistol(Player p){
 		return p.getItemInHand().getType().equals(Material.WOOD_HOE);
 	}
-	public static boolean hasPistol2(Player p){
+	
+	public static boolean hasCombatRifle(Player p){
 		return p.getItemInHand().getType().equals(Material.STONE_HOE);
 	}
-	public static boolean hasPistol3(Player p){
+	
+	public static boolean hasShotgun(Player p){
 		return p.getItemInHand().getType().equals(Material.IRON_HOE);
 	}
-	public static boolean hasPistol4(Player p){
+
+	public static boolean hasMachineGun(Player p){
 		return p.getItemInHand().getType().equals(Material.DIAMOND_HOE);
-	}
-	
-	public static boolean hasCombatRifle1(Player p){
-		return p.getItemInHand().getType().equals(Material.WOOD_AXE);
-	}
-	public static boolean hasCombatRifle2(Player p){
-		return p.getItemInHand().getType().equals(Material.STONE_AXE);
-	}
-	public static boolean hasCombatRifle3(Player p){
-		return p.getItemInHand().getType().equals(Material.IRON_AXE);
-	}
-	public static boolean hasCombatRifle4(Player p){
-		return p.getItemInHand().getType().equals(Material.DIAMOND_AXE);
-	}
-	
-	public static boolean hasShotgun1(Player p){
-		return p.getItemInHand().getType().equals(Material.WOOD_SPADE);
-	}
-	public static boolean hasShotgun2(Player p){
-		return p.getItemInHand().getType().equals(Material.STONE_SPADE);
-	}
-	public static boolean hasShotgun3(Player p){
-		return p.getItemInHand().getType().equals(Material.IRON_SPADE);
-	}
-	public static boolean hasShotgun4(Player p){
-		return p.getItemInHand().getType().equals(Material.DIAMOND_SPADE);
-	}
-	
-	public static boolean hasMachineGun1(Player p){
-		return p.getItemInHand().getType().equals(Material.WOOD_PICKAXE);
-	}
-	public static boolean hasMachineGun2(Player p){
-		return p.getItemInHand().getType().equals(Material.STONE_PICKAXE);
-	}
-	public static boolean hasMachineGun3(Player p){
-		return p.getItemInHand().getType().equals(Material.IRON_PICKAXE);
-	}
-	public static boolean hasMachineGun4(Player p){
-		return p.getItemInHand().getType().equals(Material.DIAMOND_PICKAXE);
 	}
 	
 	public static boolean hasSniper(Player p){
@@ -91,9 +53,9 @@ public class User {
 		return p.getItemInHand().getType().equals(Material.PAPER);
 	}
 	
-	public static boolean hasBloodBag(Player p){
-		return p.getItemInHand().getType().equals(Material.SADDLE);
-	}
+	//public static boolean hasBloodBag(Player p){
+	//	return p.getItemInHand().getType().equals(Material.SADDLE);
+	//}
 	
 	
 	public static boolean hasCrowbar(Player p){
