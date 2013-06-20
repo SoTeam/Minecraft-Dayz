@@ -7,7 +7,7 @@ public class TickArrows implements Runnable{
 	@Override
 	public void run() {
 		for(Entity e : Game.arrowsFired){
-			e.setVelocity(e.getVelocity().setY(e.getVelocity().getY()+.0897));
+			e.setVelocity(e.getVelocity().setY(e.getVelocity().getY()+.0872));
 		}
 	}
 }

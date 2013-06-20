@@ -17,9 +17,11 @@ public class TickDrink implements Runnable {
 				Integer dr = User.thirst.get(name);
 				
 				if(dr-1 <= 0){
-					p.sendMessage(ChatColor.RED+"You died of dehydration!");
-					p.setHealth(0);
-					Bukkit.broadcastMessage(ChatColor.DARK_GREEN+p.getName()+ChatColor.AQUA+" died of dehydration");
+					if(!p.isDead())
+					{
+						p.sendMessage(ChatColor.RED+"You died of dehydration!");
+						p.setHealth(0);
+					}
 				}
 				else if(dr-1 == 2 || dr-1 == 1){
 					p.sendMessage(ChatColor.DARK_RED+"You are dying of dehyrdation. Find water.");
@@ -38,9 +40,9 @@ public class TickDrink implements Runnable {
 				else if(dr-1 == 8)
 					p.sendMessage(ChatColor.RED+"You are really thirsty...");
 				else if(dr-1 == 12)
-					p.sendMessage(ChatColor.RED+"You are becoming thirsty.");
+					p.sendMessage(ChatColor.GOLD+"You are becoming thirsty.");
 				else if(dr-1 == 16)
-					p.sendMessage(ChatColor.RED+"You could go for some water right now.");
+					p.sendMessage(ChatColor.DARK_GRAY+"You could go for some water right now.");
 				
 				User.thirst.put(name, dr-1);
 			}

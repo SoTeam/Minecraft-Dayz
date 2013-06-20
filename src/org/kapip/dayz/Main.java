@@ -36,6 +36,7 @@ public class Main extends JavaPlugin {
 		GameCommands gc = new GameCommands();
 		getCommand("dump").setExecutor(gc);
 		getCommand("stopforce").setExecutor(gc);
+		getCommand("unstopforce").setExecutor(gc);
 		
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new DamageHandle(), this);

@@ -34,7 +34,7 @@ public class MobHandle implements Listener {
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onZombieSpawn(CreatureSpawnEvent e){
-		((LivingEntity)e.getEntity()).setMaximumNoDamageTicks(5);
+		((LivingEntity)e.getEntity()).setMaximumNoDamageTicks(12);
 		
 		int spawnx = e.getLocation().getBlockX(), x = Game.spawnLocation.getBlockX(),
 				spawnz = e.getLocation().getBlockZ(), z = Game.spawnLocation.getBlockZ(), radius = 10;
@@ -81,10 +81,10 @@ public class MobHandle implements Listener {
 			Navigation nav = ((EntityCreature)z.getHandle()).getNavigation();
 			nav.a((EntityLiving)((CraftEntity)e.getTarget()).getHandle(), Game.zombieSpeed);
 			
-			for(Entity ent : z.getNearbyEntities(.85, .85, .85)){
+			for(Entity ent : z.getNearbyEntities(1, 1, 1)){
 				if(ent instanceof Player){
 					Player p = (Player)ent;
-					if(Game.gen.nextInt(7) == 1 && ((LivingEntity) e.getEntity()).hasLineOfSight(p))
+					if(Game.gen.nextInt(6) == 1 && ((LivingEntity) e.getEntity()).hasLineOfSight(p))
 						p.damage(Game.gen.nextInt(4)+1, e.getEntity());
 				}
 			}
@@ -99,42 +99,23 @@ public class MobHandle implements Listener {
 			e.getDrops().clear();
 			
 			Random r = new Random();
-			int chainChance = 190, leatherChance = 110, swordMaxChance = 180;
+			int chainChance = 190, leatherChance = 110;
 			
 			/* WEAPON SPAWNING */
 			
-			
 			if(r.nextInt(190) == 50)
-				e.getDrops().add(new ItemStack(Material.IRON_HOE));
+				e.getDrops().add(Game.setItemName("Shotgun", new ItemStack(Material.IRON_HOE)));
 			if(r.nextInt(150) == 23)
-				e.getDrops().add(new ItemStack(Material.STONE_HOE));
+				e.getDrops().add(Game.setItemName("Combat Rifle", new ItemStack(Material.STONE_HOE)));
 			if(r.nextInt(90) == 23)
-				e.getDrops().add(new ItemStack(Material.WOOD_HOE));
-			
-			if(r.nextInt(220) == 50)
-				e.getDrops().add(new ItemStack(Material.IRON_SPADE));
-			if(r.nextInt(200) == 50)
-				e.getDrops().add(new ItemStack(Material.STONE_SPADE));
-			if(r.nextInt(180) == 50)
-				e.getDrops().add(new ItemStack(Material.WOOD_SPADE));
+				e.getDrops().add(Game.setItemName("Handgun", new ItemStack(Material.WOOD_HOE)));
 			
 			if(r.nextInt(240) == 50)
-				e.getDrops().add(new ItemStack(Material.IRON_AXE));
+				e.getDrops().add(Game.setItemName("Axe", new ItemStack(Material.IRON_AXE)));
 			if(r.nextInt(220) == 50)
-				e.getDrops().add(new ItemStack(Material.STONE_AXE));
+				e.getDrops().add(Game.setItemName("Crowbar", new ItemStack(Material.STONE_AXE)));
 			if(r.nextInt(200) == 50)
-				e.getDrops().add(new ItemStack(Material.WOOD_AXE));
-			
-			if(r.nextInt(260) == 50)
-				e.getDrops().add(new ItemStack(Material.IRON_PICKAXE));
-			if(r.nextInt(240) == 50)
-				e.getDrops().add(new ItemStack(Material.STONE_PICKAXE));
-			if(r.nextInt(220) == 50)
-				e.getDrops().add(new ItemStack(Material.WOOD_PICKAXE));
-			
-			
-			if(r.nextInt(swordMaxChance) == 15)
-				e.getDrops().add(new ItemStack(Material.STONE_SWORD));
+				e.getDrops().add(Game.setItemName("Baseball Bat", new ItemStack(Material.WOOD_AXE)));
 			
 			/* ARMOR SPAWNING */
 			
@@ -165,10 +146,7 @@ public class MobHandle implements Listener {
 			/* MISC SPAWNING */
 			
 			if(r.nextInt(9) == 2)
-				e.getDrops().add(new ItemStack(Material.ARROW, (r.nextInt(5)+2)));
-			
-			if(r.nextInt(22) == 2)
-				e.getDrops().add(new ItemStack(Material.SADDLE));
+				e.getDrops().add(Game.setItemName("Ammo", new ItemStack(Material.ARROW, (r.nextInt(6)+2))));
 			
 			if(r.nextInt(17) == 1)
 				e.getDrops().add(new ItemStack(Material.BREAD, (r.nextInt(1)+1)));
@@ -177,7 +155,10 @@ public class MobHandle implements Listener {
 				e.getDrops().add(new ItemStack(Material.APPLE, (r.nextInt(1)+1)));
 			
 			if(r.nextInt(15) == 3)
-				e.getDrops().add(new ItemStack(Material.PAPER, (r.nextInt(2)+1)));
+				e.getDrops().add(Game.setItemName("Bandage", new ItemStack(Material.PAPER, (r.nextInt(2)+1))));
+			
+			if(r.nextInt(40) == 2)
+				e.getDrops().add(Game.setItemName("Medkit", new ItemStack(Material.SADDLE)));
 			
 			if(r.nextInt(80) == 1)
 				e.getDrops().add(new ItemStack(Material.COMPASS));
@@ -188,7 +169,7 @@ public class MobHandle implements Listener {
 			if(r.nextInt(90) == 1)
 				e.getDrops().add(new ItemStack(Material.WATCH));
 			
-			if(r.nextInt(2000) == 3)
+			if(r.nextInt(1000) == 3)
 				e.getDrops().add(new ItemStack(Material.GOLDEN_APPLE, 1));
 		}
 	}

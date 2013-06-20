@@ -25,10 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -46,6 +43,7 @@ import org.kapip.dayz.game.Weapons;
 import org.kapip.dayz.game.thread.RemovePVPLogged;
 import org.kapip.dayz.game.thread.SendMessage;
 import org.kapip.dayz.game.thread.drink.CheckDrink;
+import org.kapip.dayz.game.thread.weapon.FireShotDelay;
 
 public class PlayerHandle implements Listener {
 	private static void logMessage(String message){
@@ -60,14 +58,14 @@ public class PlayerHandle implements Listener {
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockPlace(BlockPlaceEvent e){
-		if(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)
+		if(e.getPlayer().getGameMode().equals(GameMode.ADVENTURE)
 				&& !e.getBlockPlaced().getType().equals(Material.TORCH))
 			e.setCancelled(true);
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockBreak(BlockBreakEvent e){
-		if(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)
+		if(e.getPlayer().getGameMode().equals(GameMode.ADVENTURE)
 				&& !e.getBlock().getType().equals(Material.TORCH))
 			e.setCancelled(true);
 	}
@@ -78,51 +76,12 @@ public class PlayerHandle implements Listener {
 		PLUGIN.PVP_LOG.remove(p.getName());
 		User.thirst.put(p.getName(), User.fullDrink);
 		
-		if(p.getKiller() != null){
-			switch(Game.gen.nextInt(3)){
-				case 0:
-					e.setDeathMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" was killed.");
-					break;
-			}
-			
-			logMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" was murdered.");
-
+		if(p.getKiller() != null)
 			PLUGIN.PVP_LOG.remove(p.getKiller().getName());	
-		}
-		else if(p.getLastDamageCause().getCause().equals(DamageCause.ENTITY_ATTACK)) {
-			try{
-				EntityDamageEvent ede = e.getEntity().getLastDamageCause();
-				EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent)ede;
-				
-				if(edbe.getDamager() instanceof Zombie){
-					e.setDeathMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" was eaten by a "+ChatColor.GRAY+ChatColor.ITALIC+"Zombie");
-					logMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" was eaten by a "+ChatColor.GRAY+"Zombie");
-				}
-			}
-			catch(Exception err){
-				e.setDeathMessage(null);
-			}
-		}
-		else if(p.getLastDamageCause().getCause().equals(DamageCause.FALL)){
-			e.setDeathMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" fell to their death");
-			logMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" fell to their death");
-		}
-		else if(p.getLastDamageCause().getCause().equals(DamageCause.FIRE)){
-			e.setDeathMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" burned to a crisp");
-			logMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" burned to a crisp");
-		}
-		else if(p.getLastDamageCause().getCause().equals(DamageCause.STARVATION)){
-			e.setDeathMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" starved to death");
-			logMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" starved to death");
-		}
-		else if(p.getLastDamageCause().getCause().equals(DamageCause.SUFFOCATION)){
-			e.setDeathMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" suffocated");
-			logMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" suffocated");
-		}
-		else{
-			e.setDeathMessage(null);
-			logMessage(ChatColor.GOLD+p.getName()+ChatColor.GRAY+" died");
-		}
+		
+		e.setDeathMessage(null);
+		logMessage(ChatColor.GOLD+p.getName()+ChatColor.DARK_GRAY+" died");
+		Bukkit.broadcastMessage(ChatColor.GOLD+p.getName()+ChatColor.DARK_GRAY+" died");
 	}
 	
 	@EventHandler(priority = EventPriority.LOW)
@@ -135,7 +94,7 @@ public class PlayerHandle implements Listener {
 				if(!p.getNearbyEntities(8, 6, 8).contains(ent)){
 					Location el = ent.getLocation();
 					double px, pz;
-					
+
 					if(ent instanceof Zombie){
 						if(l.getX() > el.getX())
 							px = el.getX()+((l.getX()-el.getX())/2);
@@ -179,20 +138,6 @@ public class PlayerHandle implements Listener {
 				    	ArrayList<ItemStack> random = Game.spawnRandomItems(10);
 				    	Chest chest = (Chest) bs;
 					    Inventory i = chest.getInventory();
-					   
-					    /**
-					    i.clear();
-					    if(b.getLocation().getZ() < -400){
-							random = Game.spawnRandomItems(30);
-						}
-					    else if(b.getLocation().getZ() < -800){
-							random = Game.spawnRandomItems(40);
-						}
-					    else if(b.getLocation().getZ() < -1200){
-							random = Game.spawnRandomItems(50);
-						}
-						**/
-					    
 					    
 						Collections.shuffle(random);
 						
@@ -222,15 +167,14 @@ public class PlayerHandle implements Listener {
 			}
 			catch(NullPointerException err){}
 
-			/*So you don't shoot or drink water when you use something*/
+			/* So you don't shoot or drink water when you use something */
 			if(!use){
 				if(User.hasWaterBottle(p))
 					Bukkit.getScheduler().scheduleSyncDelayedTask(PLUGIN.A, new CheckDrink(p, p.getInventory().getHeldItemSlot()), 32L);
 				
-			//pistol effect
 				if(User.hasPistol(p)){			
 					if(p.getInventory().contains(Material.ARROW, 1) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
+						p.getInventory().removeItem(Game.setItemName("Ammo", new ItemStack(Material.ARROW, 1)));
 						p.launchProjectile(Arrow.class);
 						Weapons.firePistol(name);
 						
@@ -247,7 +191,7 @@ public class PlayerHandle implements Listener {
 				
 				if(User.hasShotgun(p)){			// "Shotgun" effect
 					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
+						p.getInventory().removeItem(Game.setItemName("Ammo", new ItemStack(Material.ARROW, 1)));
 						for(int i = 0;i < 6;i++){
 							p.launchProjectile(Arrow.class);
 						}
@@ -263,16 +207,15 @@ public class PlayerHandle implements Listener {
 					}
 					return;
 				}
-
 				
 				if(User.hasCombatRifle(p)){	
 					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
+						p.getInventory().removeItem(Game.setItemName("Ammo", new ItemStack(Material.ARROW, 1)));
 						p.launchProjectile(Arrow.class);
 	
 						Weapons.fireCombatRifle(name);
 						
-						is.setDurability((short)(is.getDurability()+3));
+						is.setDurability((short)(is.getDurability()+2));
 						if(is.getDurability() > is.getType().getMaxDurability()){
 							is.setDurability(is.getType().getMaxDurability());
 							p.setItemInHand(new ItemStack(0));
@@ -285,9 +228,10 @@ public class PlayerHandle implements Listener {
 				
 				if(User.hasMachineGun(p)){			// Machine gun effect
 					if(p.getInventory().contains(Material.ARROW) && !Weapons.LAST_FIRED.contains(p.getName())){
-						p.getInventory().removeItem(new ItemStack(Material.ARROW));
+						p.getInventory().removeItem(Game.setItemName("Ammo", new ItemStack(Material.ARROW)));
 						p.launchProjectile(Arrow.class);
-	
+						Bukkit.getScheduler().scheduleSyncDelayedTask(PLUGIN.A, new FireShotDelay(p), 4);
+						Bukkit.getScheduler().scheduleSyncDelayedTask(PLUGIN.A, new FireShotDelay(p), 8);
 						Weapons.fireMachineGun(p);
 						
 						is.setDurability((short)(is.getDurability()+3));
@@ -303,7 +247,7 @@ public class PlayerHandle implements Listener {
 				
 				if(User.hasBandage(p)){
 					if(p.getHealth() < 20){
-						p.getInventory().removeItem(new ItemStack(Material.PAPER, 1));
+						p.getInventory().removeItem(Game.setItemName("Bandage", new ItemStack(Material.PAPER, 1)));
 						
 						if(p.hasPotionEffect(PotionEffectType.POISON)){
 							p.removePotionEffect(PotionEffectType.POISON);
@@ -312,13 +256,34 @@ public class PlayerHandle implements Listener {
 						else
 							p.sendMessage(ChatColor.GREEN+"You used bandages!");
 						
-						if(p.getHealth() <= 18)
-							p.setHealth(p.getHealth()+2);
+						if(p.getHealth() <= 19)
+							p.setHealth(p.getHealth()+1);
 						else
 							p.setHealth(20);
 						
 						p.removePotionEffect(PotionEffectType.REGENERATION);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 0));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 0));
+					}
+					else
+						p.sendMessage(ChatColor.RED+"Your health is already full.");
+					
+					p.updateInventory();
+				}
+				else if(User.hasMedkit(p)){
+					if(p.getHealth() < 20){
+						p.getInventory().removeItem(Game.setItemName("Medkit", new ItemStack(Material.SADDLE, 1)));
+						
+						if(p.hasPotionEffect(PotionEffectType.POISON)){
+							p.removePotionEffect(PotionEffectType.POISON);
+							p.sendMessage(ChatColor.GREEN+"You used a medkit and stopped bleeding!");
+						}
+						else
+							p.sendMessage(ChatColor.GREEN+"You used a medkit!");
+		
+						p.setHealth(20);
+						
+						p.removePotionEffect(PotionEffectType.REGENERATION);
+						p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 0));
 					}
 					else
 						p.sendMessage(ChatColor.RED+"Your health is already full.");
@@ -339,8 +304,8 @@ public class PlayerHandle implements Listener {
 		Player p = e.getPlayer();
 		PlayerInventory i = p.getInventory();
 		
-		p.setGameMode(GameMode.SURVIVAL);
-		p.setMaximumNoDamageTicks(35);
+		p.setGameMode(GameMode.ADVENTURE);
+		p.setMaximumNoDamageTicks(15);
 		
 		if(!p.hasPlayedBefore())
 			p.teleport(PLUGIN.MAIN_WORLD.getSpawnLocation());

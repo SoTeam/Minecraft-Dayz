@@ -29,15 +29,15 @@ public class DamageHandle implements Listener {
 				PLUGIN.PVP_LOG.put(((Player)a.getShooter()).getName(), (int)((System.currentTimeMillis()/1000)+5));
 				
 				if(User.hasSniper(shooter))
-					e.setDamage(30);
+					e.setDamage(25);
 				else if(User.hasCombatRifle(shooter))
-					e.setDamage(6); 	
+					e.setDamage(8); 	
 				else if(User.hasShotgun(shooter))
-					e.setDamage(8);
+					e.setDamage(10);
 				else if(User.hasPistol(shooter))
-					e.setDamage(4);
+					e.setDamage(6);
 				else if(User.hasMachineGun(shooter))
-					e.setDamage(4);
+					e.setDamage(5);
 			}
 		}
 		
@@ -47,17 +47,24 @@ public class DamageHandle implements Listener {
 			int random = Game.gen.nextInt(4)-2;
 			
 			if(e.getEntity() instanceof Zombie){
-				if(User.hasAxe(attacker))
+				if(User.hasKatana(attacker))
 					e.setDamage(14+random);
+				else if(User.hasAxe(attacker))
+					e.setDamage(12+random);
 				else if(User.hasCrowbar(attacker))
 					e.setDamage(10+random);
-				
+				else if(User.hasBat(attacker))
+					e.setDamage(8+random);
 			}
 			else{
-				if(User.hasAxe(attacker))
+				if(User.hasKatana(attacker))
+					e.setDamage(12+random);
+				else if(User.hasAxe(attacker))
 					e.setDamage(10+random);
 				else if(User.hasCrowbar(attacker))
 					e.setDamage(8+random);
+				else if(User.hasBat(attacker))
+					e.setDamage(6+random);
 			}
 		}
 		
@@ -85,7 +92,7 @@ public class DamageHandle implements Listener {
 			Random r = new Random();
 			
 			if(r.nextInt(28) == 2){
-				p.setMaximumNoDamageTicks(35);
+				p.setMaximumNoDamageTicks(15);
 				
 				p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 0));
 				p.sendMessage(ChatColor.RED+"You are bleeding! Use bandages!");

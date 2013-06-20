@@ -14,6 +14,7 @@ public class User {
 	public static void drinkFull(Player p){
 		thirst.put(p.getName(), fullDrink);
 	}
+	
 	public static void getDrink(Player p){
 		try{
 			p.sendMessage("Thirst: " + thirst.get(p.getName())*4);
@@ -53,17 +54,24 @@ public class User {
 		return p.getItemInHand().getType().equals(Material.PAPER);
 	}
 	
-	//public static boolean hasBloodBag(Player p){
-	//	return p.getItemInHand().getType().equals(Material.SADDLE);
-	//}
+	public static boolean hasMedkit(Player p){
+		return p.getItemInHand().getType().equals(Material.SADDLE);
+	}
 	
-	
-	public static boolean hasCrowbar(Player p){
-		return p.getItemInHand().getType().equals(Material.STONE_SWORD);
+	public static boolean hasKatana(Player p){
+		return p.getItemInHand().getType().equals(Material.DIAMOND_AXE);
 	}
 	
 	public static boolean hasAxe(Player p){
-		return p.getItemInHand().getType().equals(Material.IRON_SWORD);
+		return p.getItemInHand().getType().equals(Material.IRON_AXE);
+	}
+	
+	public static boolean hasCrowbar(Player p){
+		return p.getItemInHand().getType().equals(Material.STONE_AXE);
+	}
+	
+	public static boolean hasBat(Player p){
+		return p.getItemInHand().getType().equals(Material.WOOD_AXE);
 	}
 	
 	public static boolean hasWaterBottle(Player p){

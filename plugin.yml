@@ -20,3 +20,8 @@ commands:
         Usage: /stopforce
         Description: RAHH.
         Default: true
+    unstopforce:
+        Permission: kapipdayz.stop
+        Usage: /unstopforce
+        Description: UNRAHH.
+        Default: true

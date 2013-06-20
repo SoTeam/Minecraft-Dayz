@@ -35,7 +35,7 @@ public class Projectiles implements Listener {
 			
 			if(Weapons.LAST_FIRED.contains(p.getName())){
 				if(User.hasSniper(p)){
-					p.sendMessage(ChatColor.DARK_GRAY+"Reloading sniper...");
+					p.sendMessage(ChatColor.RED+"Reloading sniper...");
 					e.setCancelled(true);
 					return;
 				}
@@ -44,26 +44,31 @@ public class Projectiles implements Listener {
 			if(User.hasShotgun(p)){
 			    Random random = new Random();
 			    ent.setVelocity(new Vector(
-			    		(ent.getVelocity().getX()*1.8)+((random.nextFloat()-random.nextFloat())/2.2),
-			    		(ent.getVelocity().getY()*1.97),
-			    		(ent.getVelocity().getZ()*1.8)+((random.nextFloat()-random.nextFloat())/2.2)
+			    		(ent.getVelocity().getX()*2.7)+((random.nextFloat()-random.nextFloat())/2.2),
+			    		(ent.getVelocity().getY()*2.87),
+			    		(ent.getVelocity().getZ()*2.7)+((random.nextFloat()-random.nextFloat())/2.2)
 			    ));
 				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
+				p.getWorld().playEffect(p.getLocation(), Effect.ZOMBIE_DESTROY_DOOR, 2);
 			    return;
 			}
 			else if(User.hasCombatRifle(p)){
 			    ent.setVelocity(new Vector(
 			    		ent.getVelocity().getX()*2.7,
-			    		ent.getVelocity().getY()*2.9,
+			    		ent.getVelocity().getY()*2.87,
 			    		ent.getVelocity().getZ()*2.7));
 				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
+				p.getWorld().playEffect(p.getLocation(), Effect.ZOMBIE_DESTROY_DOOR, 4);
 			    return;
 			}
 			else if(User.hasSniper(p)){
 				if(p.getInventory().contains(Material.ARROW, 1)){
-					p.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
+					p.getWorld().playEffect(p.getLocation(), Effect.ZOMBIE_DESTROY_DOOR, 6);
+					ent.setVelocity(new Vector(
+				    		ent.getVelocity().getX()*1.7,
+				    		ent.getVelocity().getY()*1.8,
+				    		ent.getVelocity().getZ()*1.7));
+					p.getInventory().removeItem(Game.setItemName("Ammo", new ItemStack(Material.ARROW, 1)));
 					cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
 					Game.arrowsFired.add(ent);
 					Weapons.fireSniper(p.getName());
@@ -76,11 +81,11 @@ public class Projectiles implements Listener {
 			}
 			else if(User.hasPistol(p)){
 			    ent.setVelocity(new Vector(
-			    		ent.getVelocity().getX()*1.85,
-			    		ent.getVelocity().getY()*1.9,
-			    		ent.getVelocity().getZ()*1.85));
+			    		ent.getVelocity().getX()*2.7,
+			    		ent.getVelocity().getY()*2.87,
+			    		ent.getVelocity().getZ()*2.7));
 				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
-				p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
+				p.getWorld().playEffect(p.getLocation(), Effect.ZOMBIE_CHEW_IRON_DOOR, 2);
 				return;
 			}
 			else if(User.hasMachineGun(p)){
@@ -88,7 +93,7 @@ public class Projectiles implements Listener {
 			    		ent.getVelocity().getX()*2.7,
 			    		ent.getVelocity().getY()*2.9,
 			    		ent.getVelocity().getZ()*2.7));
-			    p.getWorld().playEffect(p.getLocation(), Effect.BOW_FIRE, 3);
+			    p.getWorld().playEffect(p.getLocation(), Effect.ZOMBIE_CHEW_IRON_DOOR, 2);
 				cp.playerConnection.sendPacket(new Packet18ArmAnimation(cp, 1));
 				return;
 			}
